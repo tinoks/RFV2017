@@ -1,3 +1,5 @@
+// Test kommentar
+
 window.riot = riot;
 window.KORTxyz = {
 	settings: {
