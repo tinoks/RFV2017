@@ -101,7 +101,7 @@ upload = function(){
 			function(l){
 				console.log(l);
 				if(l.feature.properties.EjerNr = EjerNr){
-					l.setStyle({fillColor:'red'})
+					l.feature.setStyle({fillColor:'red'})
 				}
 			}
 		)
