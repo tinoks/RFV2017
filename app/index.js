@@ -1,5 +1,5 @@
 // Test kommentar
-
+console.log("WORKS");
 window.riot = riot;
 window.KORTxyz = {
 	settings: {
@@ -52,17 +52,18 @@ require('./js/bottomControls.js');
 
 
 
-mapboxgl = require('mapbox-gl');
-require('../node_modules/mapbox-gl/dist/mapbox-gl.css');
+mapboxgl = require('leaflet');
+require('../node_modules/leaflet/dist/leaflet.css');
 
-mapboxgl.accessToken = 'pk.eyJ1IjoidGlub2tzIiwiYSI6Ikp4OE0yWjQifQ.8ShzvCuk6zpjf9n_1pS_fA';
-map = new mapboxgl.Map({
-    container: 'map', // container id
-    style: 'mapbox://styles/mapbox/streets-v9', //stylesheet location
-    center: [10.6, 56.3], // starting position
-    zoom: 7,
-	attributionControl: false});
+map = L.map('map',{attributionControl: false,zoomControl:false}).setView([55.6,11.63], 13);
 
-document.getElementsByClassName("mapboxgl-control-container")[0].remove()
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+	maxZoom: 18,
+	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+		'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+		'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	id: 'mapbox.streets'
+}).addTo(map);
+	
 
 alasql = require('alasql');

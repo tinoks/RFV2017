@@ -80,42 +80,11 @@ upload = function(){
    // alasql("DROP INDEXEDDB DATABASE IF EXISTS KORTxyz");
 
 
-	map.addSource('marker', {
-	    type: 'geojson',
-	    data: KORTxyz.data
-		});
+	marker = L.geoJSON(KORTxyz.data).addTo(map);
 
-    map.addLayer({
-        'id': 'markerLinjer',
-        'type': 'line',
-        'source': 'marker',
-        'layout': {},
-        'paint': {
-            'line-color': '#088',
-            'line-opacity': 0.8
-        }
-    }, 'waterway-label');    	
-
-
-    map.addLayer({
-        'id': 'markerPolygon',
-        'type': 'fill',
-        'source': 'marker',
-        'layout': {},
-        'paint': {
-            'fill-color': '#088',
-            'fill-opacity': 0.6
-        }
-    }, 'markerLinjer');
-
-    map.on('click', 'markerPolygon', function (e) {
-        new mapboxgl.Popup()
-            .setLngLat(e.lngLat)
-            .setHTML('<h2>'+e.features[0].properties.EjerNr+'</h2>')
-            .addTo(map);
-    });
-
-	geomdb = KORTxyz.data.features.map(function(e) {obj=e.properties; obj["geom"] = e.geometry.coordinates; return obj});
+	geomdb = KORTxyz.data.features.map(function(e) {
+				obj=e.properties; obj["geom"] = e.geometry.coordinates; return obj
+			});
 
     alasql("CREATE INDEXEDDB DATABASE IF NOT EXISTS KORTxyz;\
         ATTACH INDEXEDDB DATABASE KORTxyz; \
@@ -125,7 +94,19 @@ upload = function(){
 		SELECT * INTO marker FROM ?", [geomdb], function(){
 			console.log("OK")
 		});
-	
+		
+	marker.on('mouseover', function(e){
+		EjerNr = e.layer.feature.properties.EjerNr;
+		marker.eachLayer(
+			function(l){
+				console.log(l);
+				if(l.feature.properties.EjerNr = EjerNr){
+					l.setStyle({fillColor:'red'})
+				}
+			}
+		)
+
+	})
 	
 
     }

@@ -15,7 +15,7 @@
 
     tablebar{
       position: absolute;
-      z-index: 10;
+      z-index: 999999;
       margin: 0 0 0 20; 
       height: calc(100% - 40px);
       height: -moz-calc(100% - 40px);
